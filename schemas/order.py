@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class User(BaseModel):
+class Order(BaseModel):
     name: str
     weight: int
     date: str
