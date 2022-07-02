@@ -11,17 +11,17 @@ def fetch_users():
     return conn.execute(users.select()).fetchall()
 
 
-@user.post('/create/')
+@user.post('/create_order/')
 def post_user(user: User):
     return conn.execute(users.insert().values(name=user.name, weight=user.weight, date=user.date, address=user.address, note=user.note))
 
 
-@user.put('/update/{id}')
+@user.put('/update_order/{id}')
 def update_user(id: int, user: User):
     return conn.execute(users.update().values(name=user.name, weight=user.weight, date=user.date, address=user.address, note=user.note).where(users.c.id == id))
 
 
-@user.delete('/delete/{id}')
+@user.delete('/delete_order/{id}')
 def delete_user(id: int):
     # c = column
     return conn.execute(users.delete().where(users.c.id == id))
