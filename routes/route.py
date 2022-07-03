@@ -8,12 +8,12 @@ user = APIRouter()
 
 
 @user.get('/')
-def fetch_orders():
+async def fetch_orders():
     return conn.execute(orders.select()).fetchall()
 
 
 @user.post('/signup/')
-def post_user(user: User):
+async def post_user(user: User):
     return conn.execute(
         users.insert().values(username=user.username, email=user.email, password=user.password,
                               phone_number=user.phone_number,
@@ -21,26 +21,26 @@ def post_user(user: User):
 
 
 @user.get('/profile')
-def fetch_users():
+async def fetch_users():
     return conn.execute(users.select()).fetchall()
 
 
 @user.post('/create_order/')
-def post_order(order: Order):
+async def post_order(order: Order):
     return conn.execute(
         orders.insert().values(weight=order.weight, date=order.date, address=order.address,
                                note=order.note))
 
 
 @user.put('/update_order/{id}')
-def update_order(id: int, order: Order):
+async def update_order(id: int, order: Order):
     return conn.execute(
         orders.update().values(weight=order.weight, date=order.date, address=order.address,
                                note=order.note).where(orders.c.id == id))
 
 
 @user.put('/update_user/{id}')
-def update_user(id: int, user: User):
+async def update_user(id: int, user: User):
     return conn.execute(
         users.update().values(username=user.username, email=user.email, password=user.password,
                               phone_number=user.phone_number,
@@ -48,12 +48,12 @@ def update_user(id: int, user: User):
 
 
 @user.delete('/delete_order/{id}')
-def delete_order(id: int):
+async def delete_order(id: int):
     # c = column
     return conn.execute(orders.delete().where(orders.c.id == id))
 
 
 @user.delete('/delete_user/{id}')
-def delete_user(id: int):
+async def delete_user(id: int):
     # c = column
     return conn.execute(users.delete().where(users.c.id == id))
