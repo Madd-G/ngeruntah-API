@@ -12,6 +12,14 @@ def fetch_orders():
     return conn.execute(orders.select()).fetchall()
 
 
+@user.post('/signup/')
+def post_user(user: User):
+    return conn.execute(
+        users.insert().values(username=user.username, email=user.email, password=user.password,
+                              phone_number=user.phone_number,
+                              gender=user.gender))
+
+
 @user.get('/profile')
 def fetch_users():
     return conn.execute(users.select()).fetchall()
@@ -22,14 +30,6 @@ def post_order(order: Order):
     return conn.execute(
         orders.insert().values(weight=order.weight, date=order.date, address=order.address,
                                note=order.note))
-
-
-@user.post('/create_user/')
-def post_user(user: User):
-    return conn.execute(
-        users.insert().values(username=user.username, email=user.email, password=user.password,
-                              phone_number=user.phone_number,
-                              gender=user.gender))
 
 
 @user.put('/update_order/{id}')
