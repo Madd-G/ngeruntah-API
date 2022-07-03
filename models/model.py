@@ -2,7 +2,15 @@ from sqlalchemy.sql.sqltypes import Integer, String
 from sqlalchemy import Table, Column
 from config.db import meta, engine
 
-users = Table('ngeruntah_user', meta,
+orders = Table('order', meta,
+              Column('id', Integer, primary_key=True),
+              Column('weight', Integer),
+              Column('date', String(255)),
+              Column('address', String(255)),
+              Column('note', String(255)),
+              )
+
+users = Table('user_ngeruntah', meta,
               Column('id', Integer, primary_key=True),
               Column('username', String(255)),
               Column('email', String(255)),

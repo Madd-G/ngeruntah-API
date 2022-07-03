@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 from config.db import conn
-from models.order import orders
-from models.user import users
+from models.model import orders, users
 from schemas.order import Order
 from schemas.user import User
 
@@ -21,7 +20,7 @@ def fetch_users():
 @user.post('/create_order/')
 def post_order(order: Order):
     return conn.execute(
-        orders.insert().values(name=order.name, weight=order.weight, date=order.date, address=order.address,
+        orders.insert().values(weight=order.weight, date=order.date, address=order.address,
                                note=order.note))
 
 
@@ -36,7 +35,7 @@ def post_user(user: User):
 @user.put('/update_order/{id}')
 def update_order(id: int, order: Order):
     return conn.execute(
-        orders.update().values(name=order.name, weight=order.weight, date=order.date, address=order.address,
+        orders.update().values(weight=order.weight, date=order.date, address=order.address,
                                note=order.note).where(orders.c.id == id))
 
 
